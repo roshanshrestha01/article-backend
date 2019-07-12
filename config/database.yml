@@ -23,7 +23,9 @@ default: &default
 
 development:
   <<: *default
-  database: article_development
+  database: article
+  username: postgres
+  password: password
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
