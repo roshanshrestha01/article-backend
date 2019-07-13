@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 2019_07_13_150841) do
     t.string "link"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["title"], name: "index_posts_on_title"
   end
 
   create_table "users", force: :cascade do |t|
