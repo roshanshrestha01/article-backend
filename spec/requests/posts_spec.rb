@@ -2,10 +2,12 @@ require 'rails_helper'
 
 RSpec.describe 'Posts API', type: :request do
     # initialize test data 
+    let(:user) { create(:user) }
     let!(:post) { create_list(:post, 10) }
     let(:post_id) { post.first.id }
     let(:user_id) { post.first.user_id }
-  
+    let(:headers) { valid_headers }
+
     # Test suite for GET /todos
     describe 'GET /v1/posts/' do
       # make HTTP get request before each example

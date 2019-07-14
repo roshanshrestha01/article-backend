@@ -1,4 +1,5 @@
 class V1::CommentsController < ApplicationController
+    skip_before_action :authorize_request, only: [:index, :show]
     before_action :set_post
     before_action :set_post_comment, only: [:show, :update, :destroy]
   

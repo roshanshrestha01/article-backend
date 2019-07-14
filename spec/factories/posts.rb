@@ -12,4 +12,4 @@ FactoryBot.define do
       link { Faker::Lorem.word }
       association :user
     end
-  end
+end
