@@ -1,32 +1,44 @@
 class V1::PostsController < ApplicationController
+    before_action :set_todo, only: [:show, :update, :destroy]
+
+    #GET /v1/posts/
     def index
         @posts = Post.all
-        render json: @posts, status: :ok
+        json_response(@posts)
     end
 
+    #POST /v1/posts/
     def create
         @posts = Post.new(post_params)
 
         @posts.save
-        render json: @post, status: :created
+        json_response(@post, :created)
     end
 
-    # def update
-    #     @posts = Post.find(params[:id])
-    # end
+    #GET /v1/posts/:id
+    def show
+        json_response(@todo)
+    end
 
+    #PUT /v1/posts/:id
+    def update
+        @post.update(post_params)
+        head :no_content
+    end
+
+    # DELETE /posts/:id
     def destroy
-        @posts = Post.where(id: params[:id]).first
-        if @posts.destroy
-            head(:ok)
-        else 
-            head(:unprocessable_entity )
-        end
+        @post.destroy
+        head :no_content
     end
-
+    
     private
 
     def post_params
         params.permit(:title, :source, :link)
+    end
+
+    def set_post
+        @post = Post.find(params[:id])
     end
 end
