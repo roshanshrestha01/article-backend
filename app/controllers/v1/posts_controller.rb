@@ -11,7 +11,7 @@ class V1::PostsController < ApplicationController
     #POST /v1/posts/
     def create
         @posts = Post.new(post_params)
-        @post.user_id = current_user.id
+        @posts.user_id = current_user.id
         @posts.save
         json_response(@post, :created)
     end
