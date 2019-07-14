@@ -10,7 +10,7 @@ class V1::PostsController < ApplicationController
     #POST /v1/posts/
     def create
         @posts = Post.new(post_params)
-
+        @post.user_id = current_user.id
         @posts.save
         json_response(@post, :created)
     end
@@ -35,7 +35,7 @@ class V1::PostsController < ApplicationController
     private
 
     def post_params
-        params.permit(:title, :source, :link, :user_id)
+        params.permit(:title, :source, :link)
     end
 
     def set_post

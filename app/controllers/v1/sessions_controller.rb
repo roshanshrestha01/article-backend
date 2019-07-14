@@ -1,20 +1,15 @@
 class V1::SessionsController < ApplicationController
-    def show
-        current_user ? head(:ok) : head(:unauthorized)
+    skip_before_action :authorize_request, only: :authenticate
+
+    def authenticate
+        auth_token =
+        AuthenticateUser.new(auth_params[:email], auth_params[:password]).call
+        json_response(auth_token: auth_token)
     end
 
-    def create 
-        @user = User.where(email: params[:email]).first
-        if @user&.valid_password?(params[:password])
-            jwt = JWT.encode( {user_id: @user.id}, Rails.application.secrets.secret_key_base, 'HS256')
-            # render :create, status: :created, locals: { token: @user.authentication_token }
-            render :create, status: :created, locals: { token: jwt }
-        else
-            head(:unauthorized)
-        end
-    end
+    private
 
-    def destroy
-        current_user ? head(:ok) : head(:unauthorized)
+    def auth_params
+        params.permit(:email, :password)
     end
 end
