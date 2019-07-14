@@ -1,5 +1,5 @@
 class V1::PostsController < ApplicationController
-    before_action :set_todo, only: [:show, :update, :destroy]
+    before_action :set_post, only: [:show, :update, :destroy]
 
     #GET /v1/posts/
     def index
@@ -17,7 +17,7 @@ class V1::PostsController < ApplicationController
 
     #GET /v1/posts/:id
     def show
-        json_response(@todo)
+        json_response(@post)
     end
 
     #PUT /v1/posts/:id
@@ -35,7 +35,7 @@ class V1::PostsController < ApplicationController
     private
 
     def post_params
-        params.permit(:title, :source, :link)
+        params.permit(:title, :source, :link, :user_id)
     end
 
     def set_post
