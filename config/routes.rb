@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   # devise_for :users
   namespace :v1, defaults: {format: 'json'} do
-    resources :posts do
+    resources :posts, param: :slug do
       resources :comments
     end
     resources :sessions, only: [:create, :destroy, :show]

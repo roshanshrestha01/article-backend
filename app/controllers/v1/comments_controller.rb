@@ -38,7 +38,7 @@ class V1::CommentsController < ApplicationController
     end
   
     def set_post
-      @post = Post.find(params[:post_id])
+      @post = Post.find_by!(slug: params[:slug])
     end
   
     def set_post_comment
