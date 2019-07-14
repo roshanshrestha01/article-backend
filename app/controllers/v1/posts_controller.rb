@@ -12,7 +12,8 @@ class V1::PostsController < ApplicationController
             has_next_page: @posts.next_page.present?,
             results: @posts
         }
-        json_response(json)
+        render json: json, status: status
+        # json_response(@posts)
     end
 
     #POST /v1/posts/

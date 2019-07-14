@@ -15,7 +15,11 @@ class V1::CommentsController < ApplicationController
   
     # POST /posts/:post_id/comments
     def create
-      @post.comment.create!(comment_params)
+      payload = {
+        message: comment_params[:message],
+        user_id: current_user.id,
+      }
+      @post.comment.create!(payload)
       json_response(@post, :created)
     end
   
@@ -34,11 +38,11 @@ class V1::CommentsController < ApplicationController
     private
   
     def comment_params
-      params.permit(:message, :user_id)
+      params.permit(:message)
     end
   
     def set_post
-      @post = Post.find_by!(slug: params[:slug])
+      @post = Post.find_by!(slug: params[:post_slug])
     end
   
     def set_post_comment

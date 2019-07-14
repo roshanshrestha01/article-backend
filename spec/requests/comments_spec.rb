@@ -4,12 +4,12 @@ RSpec.describe 'Comments API' do
   # Initialize the test data
   let!(:post) { create(:post) }
   let!(:comments) { create_list(:comment, 20, post_id: post.id) }
-  let(:post_id) { post.id }
+  let(:post_slug) { post.slug }
   let(:id) { comments.first.id }
 
-#   Test suite for GET /v1/posts/:post_id/comments
-  describe 'GET /v1/posts/:post_id/comments' do
-    before { get "/v1/posts/#{post_id}/comments" }
+#   Test suite for GET /v1/posts/:post_slug/comments
+  describe 'GET Comments from' do
+    before { get "/v1/posts/#{post_slug}/comments/" }
 
     context 'when posts exists' do
       it 'returns status code 200' do
@@ -22,7 +22,7 @@ RSpec.describe 'Comments API' do
     end
 
     context 'when post does not exist' do
-      let(:post_id) { 0 }
+      let(:post_slug) { nil }
 
       it 'returns status code 404' do
         expect(response).to have_http_status(404)

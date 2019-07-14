@@ -4,14 +4,14 @@ RSpec.describe 'Posts API', type: :request do
     # initialize test data 
     let(:user) { create(:user) }
     let!(:post) { create_list(:post, 10) }
-    let(:post_id) { post.first.id }
+    let(:post_id) { post.first.slug }
     let(:user_id) { post.first.user_id }
     let(:headers) { valid_headers }
 
     # Test suite for GET /todos
     describe 'GET /v1/posts/' do
       # make HTTP get request before each example
-      before { get '/v1/posts' }
+      before { get '/v1/posts/' }
   
       it 'returns status code 200' do
         expect(response).to have_http_status(200)
@@ -24,7 +24,7 @@ RSpec.describe 'Posts API', type: :request do
       context 'when the record exists' do
         it 'returns the post' do
           expect(json).not_to be_empty
-          expect(json['id']).to eq(post_id)
+          expect(json['slug']).to eq(post_id)
         end
   
         it 'returns status code 200' do
