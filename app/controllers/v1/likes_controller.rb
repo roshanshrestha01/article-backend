@@ -1,16 +1,15 @@
 class V1::LikesController < ApplicationController
-    skip_before_action :authorize_request, only: [:create]
     before_action :set_post
     before_action :set_like, only: [:destroy]
 
     
     def create
         if already_liked?
-            render json: {message: 'Already liked'}, status: :unauthorized
+            head(:unauthorized)
         else
-            @post.like.create(user_id: 138)
+            @post.like.create(user_id: current_user.id)
+            json_response(@post, :created)
         end
-        json_response(@post, :created)
     end
 
     def destroy
