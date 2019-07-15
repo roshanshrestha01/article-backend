@@ -5,15 +5,7 @@ class V1::PostsController < ApplicationController
     #GET /v1/posts/
     def index
         @posts = Post.paginate(:page => params[:page], :per_page => 30)
-        json = {
-            current_page: @posts.current_page,
-            total_page: @posts.total_pages,
-            has_previous_page: @posts.previous_page.present?,
-            has_next_page: @posts.next_page.present?,
-            results: @posts
-        }
-        render json: json, status: status
-        # json_response(@posts)
+        json_response(@posts)
     end
 
     #POST /v1/posts/
