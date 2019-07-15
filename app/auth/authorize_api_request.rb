@@ -9,6 +9,12 @@ class AuthorizeApiRequest
         user: user
       }
     end
+    
+    def get_user
+      {
+        user: user_pass
+      }
+    end
   
     private
   
@@ -25,6 +31,12 @@ class AuthorizeApiRequest
         ExceptionHandler::InvalidToken,
         ("#{Message.invalid_token} #{e.message}")
       )
+    end
+
+    def user_pass
+      @user ||= User.find(decoded_auth_token[:user_id]) if decoded_auth_token
+    rescue ActiveRecord::RecordNotFound => e
+      nil
     end
   
     # decode authentication token
