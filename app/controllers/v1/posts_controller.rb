@@ -4,7 +4,8 @@ class V1::PostsController < ApplicationController
 
     #GET /v1/posts/
     def index
-        @posts = Post.paginate(:page => params[:page], :per_page => 30)
+        @posts = Post.paginate(:page => params[:page], :per_page => 1)
+        set_pagination_headers
         json_response(@posts)
     end
 
@@ -16,24 +17,29 @@ class V1::PostsController < ApplicationController
         json_response(@post, :created)
     end
 
-    #GET /v1/posts/:id
+    #GET /v1/posts/:slug
     def show
         json_response(@post)
     end
 
-    #PUT /v1/posts/:id
+    #PUT /v1/posts/:slug
     def update
         @post.update(post_params)
         head :no_content
     end
 
-    # DELETE /posts/:id
+    # DELETE /posts/:slug
     def destroy
         @post.destroy
         head :no_content
     end
     
     private
+
+    def set_pagination_headers
+        headers["X-Total-Pages"] = @posts.total_pages
+        headers["Link"] = {"next_page": @posts.next_page, "previous_page": @posts.previous_page}.to_json if @posts.next_page
+    end
 
     def post_params
         params.permit(:title, :source, :link)
