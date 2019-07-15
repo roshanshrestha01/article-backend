@@ -4,7 +4,7 @@ class V1::PostsController < ApplicationController
 
     #GET /v1/posts/
     def index
-        @posts = Post.paginate(:page => params[:page], :per_page => 1)
+        @posts = Post.paginate(:page => params[:page], :per_page => 30)
         set_pagination_headers
         json_response(@posts)
     end
