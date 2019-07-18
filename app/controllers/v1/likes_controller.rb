@@ -5,17 +5,16 @@ class V1::LikesController < ApplicationController
     
     def create
         if already_liked?
-            head(:unauthorized)
+            like = Like.where(
+                user_id: current_user.id, 
+                post_id:@post.id).first
+            like.destroy
+            head(:no_content)
         else
             @post.like.create(user_id: current_user.id)
             json_response(@post, :created)
         end
     end
-
-    def destroy
-        @like.destroy
-        head :no_content
-      end
 
     private
 
