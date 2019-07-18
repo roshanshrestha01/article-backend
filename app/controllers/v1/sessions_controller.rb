@@ -3,8 +3,8 @@ class V1::SessionsController < ApplicationController
 
     def create
         auth_token = AuthenticateUser.new(auth_params[:email], auth_params[:password]).call
-
-        json_response(auth_token: auth_token)
+        user = User.find_by(email: auth_params[:email])
+        json_response(auth_token: auth_token, email: user[:email])
     end
 
     private
