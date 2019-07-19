@@ -1,24 +1,105 @@
-# README
+## Article create
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Application allowed user to create article/news/post. Browsing post created by other user
 
-Things you may want to cover:
 
-* Ruby version
+### Installation
 
-* System dependencies
+Below are bash command to be execute to fully run project in development environment. 
 
-* Configuration
+```bash
+mkdir project
+cd project
+git@github.com:roshanshrestha01/article-backend.git app
+cd app
+bundle
+bundle exec rspec
+rails s
+```
 
-* Database creation
+Server running at http://localhost:3000/
 
-* Database initialization
 
-* How to run the test suite
+### Necessary Endpoint
 
-* Services (job queues, cache servers, search engines, etc.)
+Development \
+BASE_URL = http://localhost:3000/ 
 
-* Deployment instructions
 
-* ...
+####  Post List
+
+URL: BASE_URL + 'v1/posts/' \
+Method: GET 
+
+####  Post Create
+
+URL: BASE_URL + 'v1/posts/' \
+Method: POST \
+Header : {Authorization: 'Token <token>'} \
+Data:
+```json
+{
+  "title": "Title",
+  "link": "link",
+  "source": "source"
+}
+``` 
+
+####  Post Delete
+
+URL: BASE_URL + 'v1/posts/<post_slug>' \
+Header : {Authorization: 'Token <token>'} \
+Method: DELETE 
+
+
+#### Search
+
+Ascending\
+URL: BASE_URL + 'v1/posts/?search=keyword' \
+Method: GET
+
+
+####  User Create
+
+URL: BASE_URL + 'v1/users/' \
+Method: POST \
+Data:
+```json
+{
+  "email": "Email",
+  "password": "password",
+  "password_confimation": "password_confimation"
+}
+```
+
+####  Auth token
+
+URL: BASE_URL + 'v1/sessions/' \
+Method: POST \
+Data:
+```json
+{
+  "email": "Email",
+  "password": "password"
+}
+```
+
+#### Comment
+
+URL: BASE_URL + 'v1/posts/<slug>/comments/' \
+Method: POST \
+Header : {Authorization: 'Token <token>'} \
+Data:
+```json
+{
+  "message": "Message"
+}
+```
+
+#### Like Post
+
+URL: BASE_URL + 'v1/posts/<slug>/comments/' \
+Method: POST \
+Header : {Authorization: 'Token <token>'} 
+
+If user already have liked the post set as unliked
