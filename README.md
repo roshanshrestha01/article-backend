@@ -19,6 +19,10 @@ rails s
 
 Server running at http://localhost:3000/
 
+### Demo 
+
+URL: https://powerful-citadel-52674.herokuapp.com
+
 
 ### Necessary Endpoint
 
